@@ -1,0 +1,27 @@
+[INFO] Using device: cuda
+[INFO] train: Loaded 17780 samples (real=2580, spoof=15200)
+[INFO] val: Loaded 9980 samples (real=2548, spoof=7432)
+[INFO] Train samples: 17780
+[INFO] Val samples  : 9980
+[DEBUG] Train attacks: ['A01', 'A02', 'A03', 'A04', 'bonafide']
+[DEBUG] Val attacks  : ['A05', 'A06', 'bonafide']
+[INFO] Train — real: 2580  spoof: 15200
+[INFO] pos_weight  : 0.1697
+
+[INFO] Epoch 1/20
+[VAL] Loss: 0.0372 | AUC: 0.8035 | EER: 0.2909
+[SAVE] ✨ Best model saved (EER=0.2909)
+🔶 Checkpoint saved
+
+[INFO] Epoch 2/20
+[VAL] Loss: 0.0074 | AUC: 0.8052 | EER: 0.2846
+[SAVE] ✨ Best model saved (EER=0.2846)
+🔶 Checkpoint saved
+
+[INFO] Epoch 3/20
+[VAL] Loss: 0.0055 | AUC: 0.7860 | EER: 0.3041
+🔶 Checkpoint saved
+
+[INFO] Epoch 4/20
+[VAL] Loss: 0.0033 | AUC: 0.7270 | EER: 0.3423
+🔶 Checkpoint saved
