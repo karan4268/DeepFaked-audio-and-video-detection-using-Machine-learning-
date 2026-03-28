@@ -1,0 +1,36 @@
+[INFO] Using device: cuda
+[INFO] Total test videos: 3358
+[INFO] Loaded model from: F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\old\3D Cnn Video model old\video_model_best_3D_CNN-Restnet18.pth
+[INFO] Unique labels in test set: [0 1]
+
+============= Cross-Dataset Evaluation (FF+ model Test on FakeAVCelebs) (ResNet18 3D-CNN) =============
+ROC-AUC                        : 0.5331
+Optimal Threshold              : 0.0575
+Accuracy @ Optimal Threshold   : 0.8252
+Accuracy @ 0.5 Threshold       : 0.3669
+
+Confusion Matrix:
+[[  39  111]
+ [ 476 2732]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.0757    0.2600    0.1173       150
+           1     0.9610    0.8516    0.9030      3208
+
+    accuracy                         0.8252      3358
+   macro avg     0.5183    0.5558    0.5101      3358
+weighted avg     0.9214    0.8252    0.8679      3358
+
+================================================================
+
+✅ Predictions saved to: F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\old\3D Cnn Video model old\test_predictions_Cross-dataset_fakeAVCelebs.csv
+
+_________________________________________________________________
+
+##################with Class Balanced############################
+_________________________________________________________________
+
+
+
