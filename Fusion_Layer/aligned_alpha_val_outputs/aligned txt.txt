@@ -1,0 +1,23 @@
+[INFO] Loading shared index.json ...
+  Total entries in index : 21563
+  Sample file_id         : RealVideo-RealAudio/African/men/id00076/00109.mp4
+
+[INFO] Loading video scores/labels/file_ids ...
+  Video samples : 6335
+  Unique video file_ids  : 6328
+
+[INFO] Loading audio scores/labels/file_ids ...
+  Audio samples : 6336
+  Unique audio file_ids  : 6328
+
+[INFO] Common samples (intersection) : 6328
+  Video-only             : 0
+  Audio-only             : 0
+
+[INFO] Aligned dataset — real: 2982  fake: 3346  total: 6328
+
+[INFO] Saved aligned outputs → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Fusion_Layer\aligned_alpha_val_outputs
+  aligned_video_scores.npy
+  aligned_audio_scores.npy
+  aligned_labels.npy
+  aligned_meta.json

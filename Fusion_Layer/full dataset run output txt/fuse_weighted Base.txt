@@ -1,0 +1,107 @@
+[INFO] Loading aligned scores ...
+  Samples : 21541  |  Real: 10209  Fake: 11332
+
+========== Baseline: Individual Models ==========
+
+==================================================
+ Audio Only
+==================================================
+  AUC                    : 0.7639
+  EER                    : 0.2985
+  Optimal Threshold      : 0.0261
+  Accuracy @ Optimal Thr : 0.7101
+
+  Confusion Matrix:
+[[7718 2491]
+ [3753 7579]]
+
+  Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.6728    0.7560    0.7120     10209
+           1     0.7526    0.6688    0.7083     11332
+
+    accuracy                         0.7101     21541
+   macro avg     0.7127    0.7124    0.7101     21541
+weighted avg     0.7148    0.7101    0.7100     21541
+
+
+==================================================
+ Video Only
+==================================================
+  AUC                    : 0.5354
+  EER                    : 0.4635
+  Optimal Threshold      : 0.3982
+  Accuracy @ Optimal Thr : 0.5390
+
+  Confusion Matrix:
+[[5137 5072]
+ [4858 6474]]
+
+  Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.5140    0.5032    0.5085     10209
+           1     0.5607    0.5713    0.5660     11332
+
+    accuracy                         0.5390     21541
+   macro avg     0.5373    0.5372    0.5372     21541
+weighted avg     0.5386    0.5390    0.5387     21541
+
+
+[INFO] Sweeping alpha (audio weight) from 0.0 to 1.0 ...
+  alpha=0.00  AUC=0.5354  EER=0.4635
+  alpha=0.05  AUC=0.5568  EER=0.4508
+  alpha=0.10  AUC=0.5795  EER=0.4355
+  alpha=0.15  AUC=0.6026  EER=0.4204
+  alpha=0.20  AUC=0.6255  EER=0.4049
+  alpha=0.25  AUC=0.6472  EER=0.3856
+  alpha=0.30  AUC=0.6670  EER=0.3687
+  alpha=0.35  AUC=0.6844  EER=0.3569
+  alpha=0.40  AUC=0.6989  EER=0.3523
+  alpha=0.45  AUC=0.7094  EER=0.3493
+  alpha=0.50  AUC=0.7151  EER=0.3471
+  alpha=0.55  AUC=0.7182  EER=0.3458
+  alpha=0.60  AUC=0.7208  EER=0.3438
+  alpha=0.65  AUC=0.7233  EER=0.3420
+  alpha=0.70  AUC=0.7257  EER=0.3412
+  alpha=0.75  AUC=0.7282  EER=0.3384
+  alpha=0.80  AUC=0.7312  EER=0.3383
+  alpha=0.85  AUC=0.7350  EER=0.3350
+  alpha=0.90  AUC=0.7403  EER=0.3292
+  alpha=0.95  AUC=0.7492  EER=0.3220
+  alpha=1.00  AUC=0.7639  EER=0.2985
+
+[INFO] Best alpha: 1.00  →  AUC: 0.7639  EER: 0.2985
+
+==================================================
+ Best Weighted Fusion (α=1.0·audio + 0.00·video)
+==================================================
+  AUC                    : 0.7639
+  EER                    : 0.2985
+  Optimal Threshold      : 0.0261
+  Accuracy @ Optimal Thr : 0.7101
+
+  Confusion Matrix:
+[[7718 2491]
+ [3753 7579]]
+
+  Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.6728    0.7560    0.7120     10209
+           1     0.7526    0.6688    0.7083     11332
+
+    accuracy                         0.7101     21541
+   macro avg     0.7127    0.7124    0.7101     21541
+weighted avg     0.7148    0.7101    0.7100     21541
+
+
+========== Per-Attack (Best Fusion, vs 10209 real) ==========
+  [faceswap-wav2lip      ]  AUC: 0.7620  EER: 0.3014
+  [fsgan-wav2lip         ]  AUC: 0.7690  EER: 0.2947
+  [rtvc                  ]  AUC: 0.7254  EER: 0.3271
+  [wav2lip               ]  AUC: 0.7654  EER: 0.2965
+
+[INFO] Saved AUC curve → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Fusion Layer\results\weighted\weighted_auc_curve.png
+[INFO] Saved results → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Fusion Layer\results\weighted

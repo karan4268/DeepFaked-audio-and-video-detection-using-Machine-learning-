@@ -1,0 +1,121 @@
+[INFO] Loading VAL aligned split ...
+  Val  — real: 2982  fake: 3346  total: 6328
+[INFO] Loading TEST aligned split ...
+  Test — real: 3005  fake: 3289  total: 6294
+
+========== Baselines (TEST split) ==========
+
+=======================================================
+ Audio Only — TEST
+=======================================================
+  AUC                    : 0.7827
+  EER                    : 0.2825
+  Optimal Threshold      : 0.0438
+  Accuracy @ Optimal Thr : 0.7199
+
+  Confusion Matrix:
+[[2588  417]
+ [1346 1943]]
+
+  Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.6579    0.8612    0.7459      3005
+           1     0.8233    0.5908    0.6879      3289
+
+    accuracy                         0.7199      6294
+   macro avg     0.7406    0.7260    0.7169      6294
+weighted avg     0.7443    0.7199    0.7156      6294
+
+
+=======================================================
+ Video Only — TEST
+=======================================================
+  AUC                    : 0.8507
+  EER                    : 0.2445
+  Optimal Threshold      : 0.6099
+  Accuracy @ Optimal Thr : 0.7555
+
+  Confusion Matrix:
+[[2357  648]
+ [ 891 2398]]
+
+  Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.7257    0.7844    0.7539      3005
+           1     0.7873    0.7291    0.7571      3289
+
+    accuracy                         0.7555      6294
+   macro avg     0.7565    0.7567    0.7555      6294
+weighted avg     0.7579    0.7555    0.7555      6294
+
+
+[INFO] Sweeping alpha on VAL split (alpha = audio weight) ...
+  alpha=0.00  val_AUC=0.8478  val_EER=0.2465
+  alpha=0.05  val_AUC=0.8557  val_EER=0.2435
+  alpha=0.10  val_AUC=0.8613  val_EER=0.2391
+  alpha=0.15  val_AUC=0.8662  val_EER=0.2345
+  alpha=0.20  val_AUC=0.8706  val_EER=0.2337
+  alpha=0.25  val_AUC=0.8745  val_EER=0.2290
+  alpha=0.30  val_AUC=0.8776  val_EER=0.2223
+  alpha=0.35  val_AUC=0.8802  val_EER=0.2137
+  alpha=0.40  val_AUC=0.8819  val_EER=0.2106
+  alpha=0.45  val_AUC=0.8825  val_EER=0.2117
+  alpha=0.50  val_AUC=0.8807  val_EER=0.2125
+  alpha=0.55  val_AUC=0.8756  val_EER=0.2127
+  alpha=0.60  val_AUC=0.8733  val_EER=0.2139
+  alpha=0.65  val_AUC=0.8695  val_EER=0.2167
+  alpha=0.70  val_AUC=0.8668  val_EER=0.2174
+  alpha=0.75  val_AUC=0.8642  val_EER=0.2176
+  alpha=0.80  val_AUC=0.8610  val_EER=0.2209
+  alpha=0.85  val_AUC=0.8582  val_EER=0.2220
+  alpha=0.90  val_AUC=0.8539  val_EER=0.2244
+  alpha=0.95  val_AUC=0.8467  val_EER=0.2257
+  alpha=1.00  val_AUC=0.7471  val_EER=0.3148
+
+[INFO] Best alpha on VAL: 0.45  (val AUC=0.8825)
+
+[INFO] Applying best alpha=0.45 to TEST split ...
+
+=======================================================
+ Weighted Fusion α=0.45 — TEST
+=======================================================
+  AUC                    : 0.8837
+  EER                    : 0.2077
+  Optimal Threshold      : 0.4550
+  Accuracy @ Optimal Thr : 0.7997
+
+  Confusion Matrix:
+[[2533  472]
+ [ 789 2500]]
+
+  Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.7625    0.8429    0.8007      3005
+           1     0.8412    0.7601    0.7986      3289
+
+    accuracy                         0.7997      6294
+   macro avg     0.8018    0.8015    0.7996      6294
+weighted avg     0.8036    0.7997    0.7996      6294
+
+
+========== Per-Attack (Weighted Fusion — TEST split) ==========
+  [faceswap-wav2lip         ]  AUC: 0.9427
+  [fsgan-wav2lip            ]  AUC: 0.9220
+  [rtvc                     ]  AUC: 0.7906
+  [wav2lip                  ]  AUC: 0.8306
+
+[INFO] Saved alpha curve → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Fusion_Layer\results\weighted\weighted_auc_curve.png
+[INFO] Saved results → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Fusion_Layer\results\weighted
+
+=======================================================
+ FINAL SUMMARY (TEST split — alpha tuned on val)
+=======================================================
+  Method                                   AUC       EER
+  -----------------------------------------------------
+  Audio Only                            0.7827    0.2825
+  Video Only                            0.8507    0.2445
+  Weighted Fusion (α=0.45)              0.8837    0.2077
+=======================================================

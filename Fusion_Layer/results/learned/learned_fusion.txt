@@ -1,0 +1,135 @@
+[INFO] Loading VAL aligned split ...
+  Val  — real: 2982  fake: 3346  total: 6328
+
+[INFO] Loading TEST aligned split ...
+  Test — real: 3005  fake: 3289  total: 6294
+
+========== Baselines (TEST split) ==========
+
+==========================================================
+ Audio Only — TEST
+==========================================================
+  AUC                    : 0.7827
+  EER                    : 0.2825
+  Optimal Threshold      : 0.0438
+  Accuracy @ Optimal Thr : 0.7199
+
+  Confusion Matrix:
+[[2588  417]
+ [1346 1943]]
+
+  Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.6579    0.8612    0.7459      3005
+           1     0.8233    0.5908    0.6879      3289
+
+    accuracy                         0.7199      6294
+   macro avg     0.7406    0.7260    0.7169      6294
+weighted avg     0.7443    0.7199    0.7156      6294
+
+
+==========================================================
+ Video Only — TEST
+==========================================================
+  AUC                    : 0.8507
+  EER                    : 0.2445
+  Optimal Threshold      : 0.6099
+  Accuracy @ Optimal Thr : 0.7555
+
+  Confusion Matrix:
+[[2357  648]
+ [ 891 2398]]
+
+  Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.7257    0.7844    0.7539      3005
+           1     0.7873    0.7291    0.7571      3289
+
+    accuracy                         0.7555      6294
+   macro avg     0.7565    0.7567    0.7555      6294
+weighted avg     0.7579    0.7555    0.7555      6294
+
+
+========== Logistic Regression ==========
+
+  [LR] CV hyperparameter search on val split (5 folds) ...
+  [LR] Best C = 2.0  (CV AUC = 0.8819)
+  LR coef — audio: 1.0140  video: 1.4015  bias: 0.2539
+  Implied audio weight : 0.420  video weight : 0.580
+
+==========================================================
+ Logistic Regression (C=2.0) — TEST
+==========================================================
+  AUC                    : 0.8836
+  EER                    : 0.2029
+  Optimal Threshold      : 0.5532
+  Accuracy @ Optimal Thr : 0.7984
+
+  Confusion Matrix:
+[[2397  608]
+ [ 661 2628]]
+
+  Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.7838    0.7977    0.7907      3005
+           1     0.8121    0.7990    0.8055      3289
+
+    accuracy                         0.7984      6294
+   macro avg     0.7980    0.7983    0.7981      6294
+weighted avg     0.7986    0.7984    0.7984      6294
+
+
+========== MLP ==========
+  CV over hidden sizes [(16, 8), (32, 16), (64, 32)] on val ...
+    hidden=(16, 8)  CV AUC=0.8829 ± 0.0105
+    hidden=(32, 16)  CV AUC=0.8824 ± 0.0111
+    hidden=(64, 32)  CV AUC=0.8861 ± 0.0096
+  Best hidden size: (64, 32)
+
+==========================================================
+ MLP (64, 32) — TEST
+==========================================================
+  AUC                    : 0.8863
+  EER                    : 0.2016
+  Optimal Threshold      : 0.5264
+  Accuracy @ Optimal Thr : 0.8004
+
+  Confusion Matrix:
+[[2512  493]
+ [ 763 2526]]
+
+  Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.7670    0.8359    0.8000      3005
+           1     0.8367    0.7680    0.8009      3289
+
+    accuracy                         0.8004      6294
+   macro avg     0.8019    0.8020    0.8004      6294
+weighted avg     0.8034    0.8004    0.8005      6294
+
+
+========== Per-Attack (MLP Fusion — TEST split) ==========
+  [faceswap-wav2lip         ]  AUC: 0.9435
+  [fsgan-wav2lip            ]  AUC: 0.9243
+  [rtvc                     ]  AUC: 0.7995
+  [wav2lip                  ]  AUC: 0.8337
+
+[INFO] Saved lr_model.pkl and mlp_model.pkl
+[INFO] Saved ROC plot → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Fusion_Layer\results\learned\roc_comparison.png
+
+==========================================================
+ FINAL SUMMARY (TEST split — no leakage)
+==========================================================
+  Method                              AUC       EER
+  --------------------------------------------------
+  Audio Only                       0.7827    0.2825
+  Video Only                       0.8507    0.2445
+  LR Fusion (C=2.0)                0.8836    0.2029
+  MLP Fusion (64, 32)              0.8863    0.2016
+==========================================================
+
+[INFO] All results saved → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Fusion_Layer\results\learned

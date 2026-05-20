@@ -1,0 +1,32 @@
+{
+  "note": "All AUC/EER values are on the TEST split. Fusion heads trained on VAL split only.",
+  "audio_only": {
+    "auc": 0.782669200870749,
+    "eer": 0.2824928959487304
+  },
+  "video_only": {
+    "auc": 0.8506940140811226,
+    "eer": 0.2445217735313952
+  },
+  "lr_fusion": {
+    "auc": 0.8835935243227436,
+    "eer": 0.20286737063847676,
+    "best_C": 2.0,
+    "coef_audio": 1.014019801944672,
+    "coef_video": 1.4014877963271704
+  },
+  "mlp_fusion": {
+    "auc": 0.8862716896790542,
+    "eer": 0.20162246058939973,
+    "best_hidden": [
+      64,
+      32
+    ]
+  },
+  "per_attack_best_learned": {
+    "wav2lip": 0.8337489246228488,
+    "fsgan-wav2lip": 0.9242594413351485,
+    "faceswap-wav2lip": 0.9435048487072741,
+    "rtvc": 0.7994762352600737
+  }
+}

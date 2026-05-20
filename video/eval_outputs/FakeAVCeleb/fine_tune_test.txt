@@ -1,0 +1,45 @@
+[INFO] Loading splits.json ...
+[INFO] Loading index.json ...
+  Test split : 6467 samples  (3078 real, 3389 fake)  150 speakers
+
+[INFO] Loading model : F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Models\video_finetuned\finetuned_best.pth
+  Checkpoint val_auc : 0.816494024772767
+  Num frames         : 24
+  Model output shape : torch.Size([1, 2])
+
+[INFO] Running inference on 6467 test samples ...
+Inference: 100%|████████████████| 647/647 [1:18:42<00:00,  7.30s/it, samples=6467/6467, speed=1.4/s]
+[INFO] Inference complete — 6467 samples
+[INFO] Raw scores saved → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Models\video_finetuned\eval_test_after_finetuning
+
+========== Overall Metrics (Fine-tuned Video — Test Split) ==========
+AUC                     : 0.7260
+EER                     : 0.3373
+Optimal Threshold       : 0.5259
+Accuracy @ Optimal Thr  : 0.6683
+
+Confusion Matrix:
+[[1968 1110]
+ [1035 2354]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+         0.0     0.6553    0.6394    0.6473      3078
+         1.0     0.6796    0.6946    0.6870      3389
+
+    accuracy                         0.6683      6467
+   macro avg     0.6675    0.6670    0.6671      6467
+weighted avg     0.6680    0.6683    0.6681      6467
+
+
+========== Per-Attack (vs 3078 real) ==========
+  [faceswap-wav2lip      ]  AUC: 0.7425  EER: 0.3160  N=3841
+  [fsgan-wav2lip         ]  AUC: 0.8048  EER: 0.2728  N=4156
+  [rtvc                  ]  AUC: 0.4663  EER: 0.5334  N=3228
+  [wav2lip               ]  AUC: 0.6840  EER: 0.3618  N=4476
+
+[INFO] Done.
+  Test AUC : 0.7260  EER : 0.3373
+
+[INFO] Next: run align_and_fuse_test.py to fuse with audio on test split
