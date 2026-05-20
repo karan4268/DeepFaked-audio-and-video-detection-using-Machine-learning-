@@ -1,0 +1,11 @@
+[INFO] Loading index.json ...
+  Total speakers : 500
+  Total samples  : 21566
+
+[INFO] Split summary:
+  Train  :  8763 samples  (4149 real, 4614 fake)  200 speakers
+  Val    :  6336 samples  (2982 real, 3354 fake)  150 speakers
+  Test   :  6467 samples  (3078 real, 3389 fake)  150 speakers
+
+[INFO] Saved splits → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Fusion Layer\splits.json
+[INFO] All other scripts will load from this file.

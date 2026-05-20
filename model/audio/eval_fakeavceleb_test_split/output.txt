@@ -1,0 +1,14 @@
+[INFO] Device: cuda
+[INFO] Loading splits + index...
+[INFO] Test samples: 6461
+[INFO] Model loaded
+[INFO] Loaded 21563 samples from ['fakeav_test']
+[INFO] Real: 10209 | Fake: 11354
+[INFO] ASVspoof: 0 | ITW: 0
+[INFO] Filtered dataset: 6466 samples
+
+========== AUDIO TEST (SPLIT-ALIGNED) ==========
+AUC : 0.7815
+EER : 0.2833
+
+[INFO] Saved outputs → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Models\audio\eval_fakeavceleb_test_split

@@ -1,0 +1,44 @@
+[INFO] Device          : cuda | NVIDIA GeForce GTX 1650 Ti
+[INFO] Num frames      : 24
+[INFO] Samples / epoch : 2000
+
+[INFO] Loading video index...
+  Total : 21563 samples
+[INFO] Loading splits...
+  Train :  8762  (4149 real, 4613 fake)  200 speakers
+  Val   :  6335  (2982 real, 3353 fake)  150 speakers
+  Test  : held out — 150 speakers, never touched
+
+[INFO] Loading base checkpoint: F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Models\video_combined\combined_train_best.pth
+  [MODE] Full fine-tuning (differential LR)
+
+[INFO] Starting fresh from base checkpoint
+
+[INFO] Starting — epochs 1→30, patience=10
+
+Epoch   1/30  loss=0.8246  val_auc=0.7157  lr_h=1.0e-04  lr_bb=1.0e-05  time=154.1min     
+  ✓ New best  (val_auc=0.7157)
+Epoch   2/30  loss=0.5980  val_auc=0.7763  lr_h=1.0e-04  lr_bb=1.0e-05  time=154.7min     
+  ✓ New best  (val_auc=0.7763)
+
+[INFO] Resuming from: F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Models\video_finetuned\finetuned_best.pth
+  Resumed : epoch=2  best_val_auc=0.7763  patience=0/10
+
+[INFO] Starting — epochs 3→30, patience=10
+
+Epoch   3/30  loss=0.5552  val_auc=0.7997  lr_h=1.0e-04  lr_bb=1.0e-05  time=155.4min     
+  ✓ New best  (val_auc=0.7997)
+Epoch   4/30  loss=0.5178  val_auc=0.8080  lr_h=9.9e-05  lr_bb=9.9e-06  time=154.7min     
+  ✓ New best  (val_auc=0.8080)
+Epoch   5/30  loss=0.4761  val_auc=0.8273  lr_h=9.7e-05  lr_bb=9.7e-06  time=155.8min     
+  ✓ New best  (val_auc=0.8273)
+Epoch   6/30  loss=0.4567  val_auc=0.8286  lr_h=9.5e-05  lr_bb=9.5e-06  time=155.2min     
+  ✓ New best  (val_auc=0.8286)
+
+[INFO] Resuming from: F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Models\video_finetuned\finetuned_best.pth
+  Resumed : epoch=6  best_val_auc=0.8286  patience=0/10
+
+[INFO] Starting — epochs 7→30, patience=10
+
+Epoch   7/30  loss=0.4466  val_auc=0.8474  lr_h=9.2e-05  lr_bb=9.2e-06  time=155.8min     
+  ✓ New best  (val_auc=0.8474)

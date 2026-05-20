@@ -1,0 +1,42 @@
+[INFO] Mode: asvspoof  |  Device: cuda
+[INFO] Loaded checkpoint: F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Models\audio\audio_combined_best.pth
+[INFO] Loaded 70178 samples from ['test']
+[INFO] Real: 7354 | Fake: 62824
+[INFO] ASVspoof: 70178 | ITW: 0
+
+[INFO] Loaded 70178 samples  split='test'
+
+========== Overall Metrics ==========
+  [ALL] AUC: 0.9296  EER: 0.1399  N=70178
+
+========== Per-Attack Metrics (attack vs 7354 bonafide) ==========
+  [A07] AUC: 0.9997  EER: 0.0014  N=12070
+  [A08] AUC: 0.9990  EER: 0.0071  N=12148
+  [A09] AUC: 0.9995  EER: 0.0004  N=12140
+  [A10] AUC: 0.9993  EER: 0.0032  N=12071
+  [A11] AUC: 0.9997  EER: 0.0013  N=12119
+  [A12] AUC: 0.9998  EER: 0.0006  N=12211
+  [A13] AUC: 0.9998  EER: 0.0022  N=12105
+  [A14] AUC: 0.9991  EER: 0.0059  N=12263
+  [A15] AUC: 0.9997  EER: 0.0018  N=12263
+  [A16] AUC: 0.9997  EER: 0.0024  N=12250
+  [A17] AUC: 0.6272  EER: 0.4047  N=12262
+  [A18] AUC: 0.7573  EER: 0.3109  N=12262
+  [A19] AUC: 0.7183  EER: 0.3349  N=12262
+
+[INFO] Saved scores + labels → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Models\audio\eval_outputs
+
+These are really informative results. Here's what they tell you:
+A07–A16: Near-perfect detection (AUC >0.99, EER <0.01)
+Your model handles these extremely well. These are likely vocoder-based or older TTS/VC systems whose artifacts are consistent enough to learn.
+A17–A19: Clear weak spots
+AttackAUCEERInterpretationA170.6270.405Barely better than randomA180.7570.311Moderate — strugglingA190.7180.335Struggling
+These three attacks are what's dragging your overall EER from ~0.001 to 0.14. Everything else is essentially solved — the overall metric is almost entirely determined by A17–A19.
+What A17–A19 likely are:
+In ASVspoof 2019 LA, A17–A19 are waveform-level neural vocoders (Griffin-Lim variants and neural vocoders like WaveNet/WaveRNN). They produce much more natural-sounding audio with fewer spectral artifacts, which is why log-mel based models struggle with them specifically.
+What this means for your next steps:
+The overall EER of 0.14 is not a model quality problem — it's a feature representation problem for those three attacks. A few things worth trying before moving to fusion:
+
+LFCC features alongside log-mel — linear-frequency cepstral coefficients are specifically better at catching waveform-level artifacts that mel-scale features smooth over. This is well established in the ASVspoof literature.
+Look at what A17–A19 produce spectrally — plot a bonafide vs A17 spectrogram side by side. You'll likely see the mel-scale is washing out the artifact.
+Proceed to fusion anyway — the audio model is strong enough (AUC 0.93 overall) that fusion with the video model will give you meaningful combined results. You can return to hardening A17–A19 after seeing fusion numbers.

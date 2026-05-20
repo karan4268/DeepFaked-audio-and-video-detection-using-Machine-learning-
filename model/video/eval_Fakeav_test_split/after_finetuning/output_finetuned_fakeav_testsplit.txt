@@ -1,0 +1,39 @@
+[INFO] Device : cuda
+[INFO] Loading splits...
+[INFO] Loading index...
+  Test samples : 6466
+
+[INFO] Loading model: F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Models\video_finetuned\finetuned_best.pth
+  val_auc: 0.8474491946209517
+Inference: 100%|██████████████████████████████████████████████| 647/647 [1:18:32<00:00,  7.28s/it]
+[INFO] Done — 6466 samples
+
+========== OVERALL ==========
+AUC                     : 0.8504
+EER                     : 0.2440
+Optimal Threshold       : 0.5796
+Accuracy @ Optimal Thr  : 0.7556
+
+Confusion Matrix:
+[[2376  702]
+ [ 878 2510]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+         0.0     0.7302    0.7719    0.7505      3078
+         1.0     0.7814    0.7409    0.7606      3388
+
+    accuracy                         0.7556      6466
+   macro avg     0.7558    0.7564    0.7555      6466
+weighted avg     0.7570    0.7556    0.7558      6466
+
+
+========== PER-ATTACK ==========
+  [faceswap-wav2lip      ]  AUC: 0.9397  EER: 0.1335  N=3840
+  [fsgan-wav2lip         ]  AUC: 0.9123  EER: 0.1697  N=4156
+  [rtvc                  ]  AUC: 0.6811  EER: 0.3667  N=3228
+  [wav2lip               ]  AUC: 0.7721  EER: 0.3112  N=4476
+
+[INFO] Finished.
+  AUC: 0.8504  EER: 0.2440

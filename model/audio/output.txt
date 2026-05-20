@@ -1,0 +1,68 @@
+[INFO] Device: cuda
+[INFO] Loaded 41476 samples from ['train', 'itw_train']
+[INFO] Real: 18325 | Fake: 23151
+[INFO] ASVspoof: 17687 | ITW: 23789
+[INFO] Train samples: 41476
+[INFO] Real: 18325 | Fake: 23151
+[INFO]   itw: 23789 samples
+[INFO]   asvspoof: 17687 samples
+[INFO] Loaded 9980 samples from ['val']
+[INFO] Real: 2548 | Fake: 7432
+[INFO] ASVspoof: 9980 | ITW: 0
+[INFO] Loaded 4453 samples from ['itw_val']
+[INFO] Real: 2326 | Fake: 2127
+[INFO] ASVspoof: 0 | ITW: 4453
+[INFO] Val ASVspoof: 9980 | Val ITW: 4453
+[INFO] pos_weight: 0.7915
+
+[INFO] Epoch 1/20  lr=3.00e-05
+[VAL] Loss: 0.2290 | ASV → AUC: 0.6740  EER: 0.3928 | ITW → AUC: 0.9957  EER: 0.0306 | Combined EER: 0.2117
+🔶 Checkpoint saved
+
+[INFO] Epoch 2/20  lr=2.86e-05
+[VAL] Loss: 0.1607 | ASV → AUC: 0.8001  EER: 0.2701 | ITW → AUC: 0.9992  EER: 0.0078 | Combined EER: 0.1390
+[SAVE] ✨ Best model saved  combined_EER=0.1390  ASV_EER=0.2701  ITW_EER=0.0078
+🔶 Checkpoint saved
+
+[INFO] Epoch 3/20  lr=2.45e-05
+[VAL] Loss: 0.1467 | ASV → AUC: 0.8194  EER: 0.2728 | ITW → AUC: 0.9998  EER: 0.0023 | Combined EER: 0.1375
+[SAVE] ✨ Best model saved  combined_EER=0.1375  ASV_EER=0.2728  ITW_EER=0.0023
+🔶 Checkpoint saved
+
+[INFO] Epoch 4/20  lr=1.87e-05
+[VAL] Loss: 0.1356 | ASV → AUC: 0.8057  EER: 0.2878 | ITW → AUC: 0.9992  EER: 0.0079 | Combined EER: 0.1478
+🔶 Checkpoint saved
+
+[INFO] Epoch 5/20  lr=1.23e-05
+[VAL] Loss: 0.1300 | ASV → AUC: 0.8245  EER: 0.2739 | ITW → AUC: 0.9993  EER: 0.0034 | Combined EER: 0.1386
+🔶 Checkpoint saved
+
+[INFO] Epoch 6/20  lr=6.46e-06
+[VAL] Loss: 0.1257 | ASV → AUC: 0.8355  EER: 0.2571 | ITW → AUC: 0.9996  EER: 0.0076 | Combined EER: 0.1324
+[SAVE] ✨ Best model saved  combined_EER=0.1324  ASV_EER=0.2571  ITW_EER=0.0076
+🔶 Checkpoint saved
+
+[INFO] Epoch 7/20  lr=2.44e-06
+[VAL] Loss: 0.1217 | ASV → AUC: 0.8446  EER: 0.2488 | ITW → AUC: 0.9998  EER: 0.0058 | Combined EER: 0.1273
+[SAVE] ✨ Best model saved  combined_EER=0.1273  ASV_EER=0.2488  ITW_EER=0.0058
+🔶 Checkpoint saved
+
+[INFO] Epoch 8/20  lr=3.00e-05
+[VAL] Loss: 0.1368 | ASV → AUC: 0.7448  EER: 0.3442 | ITW → AUC: 0.9994  EER: 0.0049 | Combined EER: 0.1746
+🔶 Checkpoint saved
+
+[INFO] Epoch 9/20  lr=2.86e-05
+[VAL] Loss: 0.1332 | ASV → AUC: 0.6980  EER: 0.3657 | ITW → AUC: 0.9993  EER: 0.0027 | Combined EER: 0.1842
+🔶 Checkpoint saved
+
+[INFO] Epoch 10/20  lr=2.86e-05
+[VAL] Loss: 0.1297 | ASV → AUC: 0.7372  EER: 0.3437 | ITW → AUC: 0.9989  EER: 0.0076 | Combined EER: 0.1756
+🔶 Checkpoint saved
+
+[INFO] Epoch 11/20  lr=2.45e-05
+[VAL] Loss: 0.1263 | ASV → AUC: 0.7666  EER: 0.3141 | ITW → AUC: 0.9997  EER: 0.0049 | Combined EER: 0.1595
+🔶 Checkpoint saved
+
+[INFO] Epoch 12/20  lr=1.87e-05
+[VAL] Loss: 0.1223 | ASV → AUC: 0.7462  EER: 0.3336 | ITW → AUC: 0.9993  EER: 0.0038 | Combined EER: 0.1687
+🔶 Checkpoint saved
