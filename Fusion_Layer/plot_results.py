@@ -6,7 +6,7 @@
 #   2. Bar chart: Per-attack AUC (audio / video / best fusion)
 #   3. AUC vs Alpha curve  (from weighted fusion)
 #   4. ROC curves          (from learned fusion)
-#   5. Per-speaker heatmap: video AUC vs audio AUC scatter
+#   5. Per-speaker scatter: video AUC vs audio AUC
 #
 # Run after fuse_weighted.py and fuse_learned.py.
 # =============================================================================
@@ -15,32 +15,38 @@ import os
 import json
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 from sklearn.metrics import roc_auc_score, roc_curve
+from sklearn.metrics import confusion_matrix
 
 # =============================================================================
 # PATHS
 # =============================================================================
 
-ALIGNED_DIR      = (
+ALIGNED_DIR  = (
     r"F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer"
-    r"\Models\fusion\aligned"
+    r"\Fusion_Layer\aligned_alpha_test_outputs"
 )
-WEIGHTED_DIR     = (
+WEIGHTED_DIR = (
     r"F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer"
-    r"\Models\fusion\results\weighted"
+    r"\Fusion_Layer\results\weighted"
 )
-LEARNED_DIR      = (
+LEARNED_DIR  = (
     r"F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer"
-    r"\Models\fusion\results\learned"
+    r"\Fusion_Layer\results\learned"
 )
-
-# Video + Audio per-speaker results (paste from your eval logs or load from saved files)
-# These are loaded from the aligned scores + meta for consistency.
-OUTPUT_DIR = (
+OUTPUT_DIR   = (
     r"F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer"
     r"\Models\fusion\results\plots"
 )
+
+# =============================================================================
+# COLORS  —  audio=blue, video=orange, lr=steel-blue, mlp=red
+# =============================================================================
+
+COLOR_AUDIO = "#1f77b4"   # blue
+COLOR_VIDEO = "#ff7f0e"   # orange
+COLOR_LR    = "#3F0BE9"   # teal
+COLOR_MLP   = "#E63946"   # red
 
 # =============================================================================
 
@@ -54,25 +60,27 @@ def compute_eer(labels, scores):
 
 def set_style():
     plt.rcParams.update({
-        "font.family":   "DejaVu Sans",
-        "font.size":     11,
-        "axes.titlesize": 13,
-        "axes.labelsize": 12,
-        "axes.spines.top":   False,
-        "axes.spines.right": False,
-        "figure.dpi":    150,
+        "font.family":        "DejaVu Sans",
+        "font.size":          11,
+        "axes.titlesize":     13,
+        "axes.labelsize":     12,
+        "axes.spines.top":    False,
+        "axes.spines.right":  False,
+        "figure.dpi":         150,
     })
 
 
+# =============================================================================
+# Figure 1 — Overall AUC bar chart
+# =============================================================================
+
 def plot_auc_bar(methods, aucs, eers, output_path):
-    """Figure 1: Overall AUC bar chart with EER annotations."""
-    colors = ["#F4A261", "#2A9D8F", "#457B9D", "#E63946"]
+    colors = [COLOR_AUDIO, COLOR_VIDEO, COLOR_LR, COLOR_MLP]
     x = np.arange(len(methods))
 
     fig, ax = plt.subplots(figsize=(9, 5))
     bars = ax.bar(x, aucs, color=colors[:len(methods)], width=0.5, zorder=3)
 
-    # Value labels
     for bar, auc, eer in zip(bars, aucs, eers):
         ax.text(bar.get_x() + bar.get_width() / 2,
                 bar.get_height() + 0.005,
@@ -84,7 +92,8 @@ def plot_auc_bar(methods, aucs, eers, output_path):
     ax.set_ylabel("AUC")
     ax.set_title("Deepfake Detection: Overall AUC Comparison")
     ax.set_ylim(0.4, 1.0)
-    ax.axhline(0.5, color="gray", linestyle="--", linewidth=1, alpha=0.5, label="Random baseline")
+    ax.axhline(0.5, color="gray", linestyle="--", linewidth=1,
+               alpha=0.5, label="Random baseline")
     ax.legend(fontsize=9)
     ax.grid(axis="y", alpha=0.3, zorder=0)
 
@@ -94,15 +103,18 @@ def plot_auc_bar(methods, aucs, eers, output_path):
     print(f"[INFO] Saved → {output_path}")
 
 
+# =============================================================================
+# Figure 2 — Per-attack grouped bar chart
+# =============================================================================
+
 def plot_per_attack_bar(attacks, aud_aucs, vid_aucs, fused_aucs, output_path):
-    """Figure 2: Grouped bar chart per attack."""
-    x      = np.arange(len(attacks))
-    width  = 0.25
+    x     = np.arange(len(attacks))
+    width = 0.25
 
     fig, ax = plt.subplots(figsize=(11, 5))
-    b1 = ax.bar(x - width, aud_aucs,   width, label="Audio Only",    color="#F4A261")
-    b2 = ax.bar(x,          vid_aucs,   width, label="Video Only",    color="#2A9D8F")
-    b3 = ax.bar(x + width,  fused_aucs, width, label="Best Fusion",   color="#457B9D")
+    ax.bar(x - width, aud_aucs,   width, label="Audio Only",  color=COLOR_AUDIO)
+    ax.bar(x,          vid_aucs,   width, label="Video Only",  color=COLOR_VIDEO)
+    ax.bar(x + width,  fused_aucs, width, label="Best Fusion", color=COLOR_LR)
 
     ax.set_xticks(x)
     ax.set_xticklabels(attacks, fontsize=10)
@@ -119,23 +131,32 @@ def plot_per_attack_bar(attacks, aud_aucs, vid_aucs, fused_aucs, output_path):
     print(f"[INFO] Saved → {output_path}")
 
 
+# =============================================================================
+# Figure 3 — AUC vs Alpha curve
+# =============================================================================
+
 def plot_alpha_curve(weighted_results_path, output_path):
-    """Figure 3: AUC vs Alpha from weighted fusion."""
     with open(weighted_results_path) as f:
         res = json.load(f)
 
-    alphas = [r["alpha"] for r in res["sweep"]]
-    aucs   = [r["auc"]   for r in res["sweep"]]
+    alphas = [r["alpha"] for r in res["val_sweep"]]
+    aucs   = [r["auc"]   for r in res["val_sweep"]]
+
+    audio_only_auc = res["audio_only_test"]["auc"]
+    video_only_auc = res["video_only_test"]["auc"]
+    best_alpha     = res["best_alpha"]
+    best_auc       = res["val_auc_at_best"]
 
     fig, ax = plt.subplots(figsize=(9, 5))
-    ax.plot(alphas, aucs, "b-o", linewidth=2, markersize=5, label="Fusion AUC")
-    ax.axhline(res["audio_only_auc"], color="#F4A261", linestyle="--", linewidth=1.8,
-               label=f"Audio Only ({res['audio_only_auc']:.4f})")
-    ax.axhline(res["video_only_auc"], color="#2A9D8F", linestyle="--", linewidth=1.8,
-               label=f"Video Only ({res['video_only_auc']:.4f})")
-    ax.axvline(res["best_alpha"], color="red", linestyle=":", linewidth=1.5,
-               label=f"Best α={res['best_alpha']:.2f}  AUC={res['best_auc']:.4f}")
-    ax.scatter([res["best_alpha"]], [res["best_auc"]], color="red", zorder=5, s=80)
+    ax.plot(alphas, aucs, color=COLOR_LR, marker="o", linewidth=2,
+            markersize=5, label="Fusion AUC")
+    ax.axhline(audio_only_auc, color=COLOR_AUDIO, linestyle="--", linewidth=1.8,
+               label=f"Audio Only ({audio_only_auc:.4f})")
+    ax.axhline(video_only_auc, color=COLOR_VIDEO, linestyle="--", linewidth=1.8,
+               label=f"Video Only ({video_only_auc:.4f})")
+    ax.axvline(best_alpha, color="red", linestyle=":", linewidth=1.5,
+               label=f"Best α={best_alpha:.2f}  AUC={best_auc:.4f}")
+    ax.scatter([best_alpha], [best_auc], color="red", zorder=5, s=80)
     ax.set_xlabel("α  (weight of audio score,  1−α for video)")
     ax.set_ylabel("AUC")
     ax.set_title("Weighted Fusion: AUC vs Audio Weight (α)")
@@ -149,15 +170,19 @@ def plot_alpha_curve(weighted_results_path, output_path):
     print(f"[INFO] Saved → {output_path}")
 
 
-def plot_roc_curves(labels, aud_scores, vid_scores, lr_scores, mlp_scores, output_path):
-    """Figure 4: ROC curves for all methods."""
+# =============================================================================
+# Figure 4 — ROC curves
+# =============================================================================
+
+def plot_roc_curves(labels, aud_scores, vid_scores, lr_scores, mlp_scores,
+                    output_path):
     fig, ax = plt.subplots(figsize=(8, 7))
 
     configs = [
-        (aud_scores, "Audio Only",    "#F4A261", "--"),
-        (vid_scores, "Video Only",    "#2A9D8F", "--"),
-        (lr_scores,  "LR Fusion",     "#457B9D", "-"),
-        (mlp_scores, "MLP Fusion",    "#E63946", "-"),
+        (aud_scores, "Audio Only", COLOR_AUDIO, "--"),
+        (vid_scores, "Video Only", COLOR_VIDEO, "--"),
+        (lr_scores,  "LR Fusion",  COLOR_LR,    "-"),
+        (mlp_scores, "MLP Fusion", COLOR_MLP,   "-"),
     ]
 
     for scores, label, color, ls in configs:
@@ -179,34 +204,37 @@ def plot_roc_curves(labels, aud_scores, vid_scores, lr_scores, mlp_scores, outpu
     print(f"[INFO] Saved → {output_path}")
 
 
+# =============================================================================
+# Figure 5 — Per-speaker scatter
+# =============================================================================
+
 def plot_speaker_scatter(labels, aud_scores, vid_scores, meta, output_path):
-    """Figure 5: Per-speaker scatter — video AUC vs audio AUC."""
     from collections import defaultdict
 
-    real_pool_l, real_pool_va, real_pool_aa = [], [], []
+    real_pool = {"l": [], "v": [], "a": []}
     spk_buckets = defaultdict(lambda: {"labels": [], "aud": [], "vid": []})
 
     for i, m in enumerate(meta):
         if labels[i] == 0:
-            real_pool_l.append(labels[i])
-            real_pool_va.append(vid_scores[i])
-            real_pool_aa.append(aud_scores[i])
+            real_pool["l"].append(labels[i])
+            real_pool["v"].append(vid_scores[i])
+            real_pool["a"].append(aud_scores[i])
         else:
             spk = m["speaker"]
             spk_buckets[spk]["labels"].append(labels[i])
             spk_buckets[spk]["aud"].append(aud_scores[i])
             spk_buckets[spk]["vid"].append(vid_scores[i])
 
-    real_l  = np.array(real_pool_l)
-    real_va = np.array(real_pool_va)
-    real_aa = np.array(real_pool_aa)
+    real_l  = np.array(real_pool["l"])
+    real_va = np.array(real_pool["v"])
+    real_aa = np.array(real_pool["a"])
 
     spk_vid_aucs, spk_aud_aucs = [], []
 
     for spk, bkt in spk_buckets.items():
-        l   = np.concatenate([real_l,  bkt["labels"]])
-        va  = np.concatenate([real_va, bkt["vid"]])
-        aa  = np.concatenate([real_aa, bkt["aud"]])
+        l  = np.concatenate([real_l,  bkt["labels"]])
+        va = np.concatenate([real_va, bkt["vid"]])
+        aa = np.concatenate([real_aa, bkt["aud"]])
         if len(np.unique(l)) < 2:
             continue
         spk_vid_aucs.append(roc_auc_score(l, va))
@@ -217,14 +245,17 @@ def plot_speaker_scatter(labels, aud_scores, vid_scores, meta, output_path):
 
     fig, ax = plt.subplots(figsize=(8, 7))
     sc = ax.scatter(spk_vid_aucs, spk_aud_aucs, alpha=0.6, s=40,
-                    c=spk_aud_aucs - spk_vid_aucs, cmap="RdYlGn", vmin=-0.5, vmax=0.5)
-    ax.plot([0, 1], [0, 1], "k--", linewidth=1, alpha=0.4, label="Equal performance")
+                    c=spk_aud_aucs - spk_vid_aucs,
+                    cmap="RdYlGn", vmin=-0.5, vmax=0.5)
+    ax.plot([0, 1], [0, 1], "k--", linewidth=1, alpha=0.4,
+            label="Equal performance")
     ax.axvline(0.5, color="gray", linestyle=":", linewidth=1, alpha=0.5)
     ax.axhline(0.5, color="gray", linestyle=":", linewidth=1, alpha=0.5)
     plt.colorbar(sc, ax=ax, label="Audio AUC − Video AUC")
     ax.set_xlabel("Video Model AUC (per speaker)")
     ax.set_ylabel("Audio Model AUC (per speaker)")
-    ax.set_title("Per-Speaker: Audio vs Video AUC\n(green=audio better, red=video better)")
+    ax.set_title("Per-Speaker: Audio vs Video AUC\n"
+                 "(green = audio better, red = video better)")
     ax.legend(fontsize=9)
     ax.grid(True, alpha=0.2)
 
@@ -233,20 +264,38 @@ def plot_speaker_scatter(labels, aud_scores, vid_scores, meta, output_path):
     plt.close()
     print(f"[INFO] Saved → {output_path}")
 
+# =============================================================================
+# Per-attack confusion matrices for MLP fusion (at a given threshold)
+#================================================================================
+def print_per_attack_confusion_matrices(labels, mlp_scores, meta, threshold=0.5264):
+    from collections import defaultdict
+    real_idx = [i for i, l in enumerate(labels) if l == 0]
+    atk_idx  = defaultdict(list)
+    for i, m in enumerate(meta):
+        if labels[i] == 1:
+            atk_idx[m["attack"]].append(i)
+
+    for atk, fake_idxs in sorted(atk_idx.items()):
+        idx = real_idx + fake_idxs
+        y_true = labels[idx]
+        y_pred = (mlp_scores[idx] >= threshold).astype(int)
+        cm = confusion_matrix(y_true, y_pred)
+        print(f"\n{atk}  (n={len(idx)})")
+        print(cm)
+# =============================================================================
+# MAIN
+# =============================================================================
 
 def main():
     set_style()
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    # -------------------------------------------------------------------------
-    # Load everything
-    # -------------------------------------------------------------------------
+    # Load scores and metadata
     vid_scores = np.load(os.path.join(ALIGNED_DIR, "aligned_video_scores.npy"))
     aud_scores = np.load(os.path.join(ALIGNED_DIR, "aligned_audio_scores.npy"))
     labels     = np.load(os.path.join(ALIGNED_DIR, "aligned_labels.npy"))
-    lr_scores  = np.load(os.path.join(LEARNED_DIR,  "lr_fusion_scores.npy"))
-    mlp_scores = np.load(os.path.join(LEARNED_DIR,  "mlp_fusion_scores.npy"))
-    best_w_scores = np.load(os.path.join(WEIGHTED_DIR, "weighted_best_scores.npy"))
+    lr_scores  = np.load(os.path.join(LEARNED_DIR, "lr_fusion_test_scores.npy"))
+    mlp_scores = np.load(os.path.join(LEARNED_DIR, "mlp_fusion_test_scores.npy"))
 
     with open(os.path.join(ALIGNED_DIR,  "aligned_meta.json")) as f:
         meta = json.load(f)
@@ -259,13 +308,13 @@ def main():
     # Figure 1: Overall AUC bar chart
     # -------------------------------------------------------------------------
     methods = ["Audio Only", "Video Only", "LR Fusion", "MLP Fusion"]
-    aucs    = [
+    aucs = [
         l_res["audio_only"]["auc"],
         l_res["video_only"]["auc"],
         l_res["lr_fusion"]["auc"],
         l_res["mlp_fusion"]["auc"],
     ]
-    eers    = [
+    eers = [
         l_res["audio_only"]["eer"],
         l_res["video_only"]["eer"],
         l_res["lr_fusion"]["eer"],
@@ -284,11 +333,13 @@ def main():
         atk_bkt = defaultdict(lambda: {"labels": [], "scores": []})
         for i, m in enumerate(meta):
             if labels[i] == 0:
-                real_l.append(labels[i]); real_s.append(scores[i])
+                real_l.append(labels[i])
+                real_s.append(scores[i])
             else:
                 atk_bkt[m["attack"]]["labels"].append(labels[i])
                 atk_bkt[m["attack"]]["scores"].append(scores[i])
-        real_l = np.array(real_l); real_s = np.array(real_s)
+        real_l = np.array(real_l)
+        real_s = np.array(real_s)
         result = {}
         for atk, bkt in atk_bkt.items():
             l = np.concatenate([real_l, bkt["labels"]])
@@ -297,17 +348,17 @@ def main():
         return result
 
     attacks_order = ["faceswap-wav2lip", "fsgan-wav2lip", "rtvc", "wav2lip"]
+    atk_labels    = ["FaceSwap-Wav2Lip", "FSGAN-Wav2Lip", "RTVC", "Wav2Lip"]
+
     aud_atk = per_attack_aucs(aud_scores)
     vid_atk = per_attack_aucs(vid_scores)
-    lr_atk  = per_attack_aucs(lr_scores)
+    mlp_atk = per_attack_aucs(mlp_scores)   # MLP is best fusion
 
-    # Use friendly names for plot
-    atk_labels = ["FaceSwap-Wav2Lip", "FSGAN-Wav2Lip", "RTVC", "Wav2Lip"]
     plot_per_attack_bar(
         atk_labels,
         [aud_atk.get(a, 0) for a in attacks_order],
         [vid_atk.get(a, 0) for a in attacks_order],
-        [lr_atk.get(a,  0) for a in attacks_order],
+        [mlp_atk.get(a, 0) for a in attacks_order],
         os.path.join(OUTPUT_DIR, "fig2_per_attack_auc.png")
     )
 
@@ -341,7 +392,11 @@ def main():
     print("  fig3_alpha_curve.png")
     print("  fig4_roc_curves.png")
     print("  fig5_speaker_scatter.png")
-
+    # -------------------------------------------------------------------------
+    # Per-attack confusion matrices (for Appendix C)
+    # -------------------------------------------------------------------------
+    print("\n========== Per-Attack Confusion Matrices (MLP, threshold=0.5264) ==========")
+    print_per_attack_confusion_matrices(labels, mlp_scores, meta, threshold=0.5264)
 
 if __name__ == "__main__":
     main()
