@@ -111,7 +111,7 @@ A three-stage pipeline for audio-visual deepfake detection combining independent
 - Zero-shot AUC on FakeAVCeleb: **0.5352** (near random chance)
 
 **Audio model** trained on ASVspoof2019-LA + In-The-Wild (41,476 samples).
-- Architecture: AudioResNet18, 80-band log-mel spectrogram
+- Architecture: AudioResNet18, 128-band log-mel spectrogram
 - Best checkpoint: epoch 7, combined EER **0.1273**
 - Zero-shot AUC on FakeAVCeleb: **0.7827**
 
