@@ -87,7 +87,14 @@ A three-stage pipeline for audio-visual deepfake detection combining independent
 │           ├── lr_model.pkl
 │           ├── mlp_model.pkl
 │           └── roc_comparison.png
-│
+│── fusion_results/
+|    |── results/
+|        |── plots/
+|            |── fig1_overall_auc.png
+|            |── fig2_per_attack_auc.png
+|            |── fig3_alpha_curve.png
+|            |── fig5_speaker_scatter.png
+|
 ├── output.png                          # System output sample
 └── system blueprint.png                # Pipeline architecture diagram
 ```
