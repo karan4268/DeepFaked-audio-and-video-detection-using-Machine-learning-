@@ -252,7 +252,7 @@ tqdm                 # Progress bars during inference and training loops
 If you use this code or results, please cite this thesis:
 
 ```
-Karandeep Singh
+Karandeep chadda
 Multimodal Deepfake Detection via Score-Level Fusion of
 Independently Trained Audio and Video Models
 MTech Thesis, [Gandwana University,Maharashtra-India], 2026
