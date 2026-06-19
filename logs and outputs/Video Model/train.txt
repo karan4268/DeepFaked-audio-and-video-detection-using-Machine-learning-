@@ -1,0 +1,134 @@
+[INFO] Device name: cuda | NVIDIA GeForce GTX 1650 Ti
+
+[INFO] Loading datasets...
+[INFO] FF++    train:  4200 samples  (real: 700, fake: 3500)
+[INFO] CelebDF train:  4643 samples  (real: 557, fake: 4086)
+[INFO] Combined train:  8843 samples  (real: 1257, fake: 7586, ratio: 6.04)
+[INFO] Val (CelebDF):  1368 samples  (real: 155, fake: 1213)
+[INFO] Val: 1368 samples  (real: 155, fake: 1213)  full set
+[INFO] Train pool: 8843 samples — resampling 2000 each epoch
+
+[INFO] Training from scratch on FF++ + CelebDF combined
+
+Training up to 15 epochs  |  Patience: 5  |  Effective batch: 12
+------------------------------------------------------------
+
+[Epoch 1/15]  LR=1.00e-04
+  Epoch 1/15  [====================]   667/667  loss 0.5871  7.13s/b  ETA 0s        
+  ↳ loss 0.5871  |  took 1h 19m 13s  |  elapsed 1h 19m 13s  |  ETA 18h 29m 3s
+  ↳ val  acc 0.9152  auc 0.8555
+  ✨ Best model saved  (AUC=0.8555)
+  🔶 Checkpoint saved
+
+[Epoch 2/15]  LR=9.89e-05
+  Epoch 2/15  [====================]   667/667  loss 0.5098  7.16s/b  ETA 0s        
+  ↳ loss 0.5098  |  took 1h 19m 37s  |  elapsed 2h 57m 4s  |  ETA 17h 12m 30s
+  ↳ val  acc 0.9306  auc 0.9583
+  ✨ Best model saved  (AUC=0.9583)
+  🔶 Checkpoint saved
+
+[Epoch 3/15]  LR=9.57e-05
+  Epoch 3/15  [====================]   667/667  loss 0.4463  7.11s/b  ETA 0s        
+  ↳ loss 0.4463  |  took 1h 19m 4s  |  elapsed 4h 33m 57s  |  ETA 15h 51m 39s
+  ↳ val  acc 0.6813  auc 0.9177
+  No improvement — patience 1/5
+  🔶 Checkpoint saved
+
+[INFO] Resumed from epoch 3  |  Best AUC: 0.9583
+
+Training up to 15 epochs  |  Patience: 5  |  Effective batch: 12
+------------------------------------------------------------
+
+[Epoch 4/15]  LR=1.00e-04
+  Epoch 4/15  [====================]   667/667  loss 0.3998  7.19s/b  ETA 0s        
+  ↳ loss 0.3998  |  took 1h 19m 53s  |  elapsed 1h 19m 53s  |  ETA 14h 38m 52s
+  ↳ val  acc 0.9532  auc 0.9589
+  ✨ Best model saved  (AUC=0.9589)
+  🔶 Checkpoint saved
+
+[Epoch 5/15]  LR=8.95e-05
+  Epoch 5/15  [====================]   667/667  loss 0.3569  7.37s/b  ETA 0s        
+  ↳ loss 0.3569  |  took 1h 21m 56s  |  elapsed 3h 0m 13s  |  ETA 13h 29m 9s
+  ↳ val  acc 0.9313  auc 0.9387
+  No improvement — patience 1/5
+  🔶 Checkpoint saved
+  
+[Epoch 6/15]  LR=8.65e-05
+  Epoch 6/15  [====================]   667/667  loss 0.3066  7.12s/b  ETA 0s        
+  ↳ loss 0.3066  |  took 1h 19m 6s  |  elapsed 4h 37m 31s  |  ETA 12h 2m 48s
+  ↳ val  acc 0.9430  auc 0.9716
+  ✨ Best model saved  (AUC=0.9716)
+  🔶 Checkpoint saved
+
+[INFO] Loading checkpoint...
+[INFO] Resumed from epoch 6  |  Best AUC: 0.9716
+
+Training up to 15 epochs  |  Patience: 5  |  Effective batch: 12
+------------------------------------------------------------
+
+[Epoch 7/15]  LR=1.00e-04 
+  Epoch 7/15  [====================]   667/667  loss 0.2775  7.12s/b  ETA 0s        
+  ↳ loss 0.2775  |  took 1h 19m 10s  |  elapsed 1h 19m 10s  |  ETA 10h 33m 21s
+  ↳ val  acc 0.9408  auc 0.9672
+  No improvement — patience 1/5
+  🔶 Checkpoint saved
+
+[Epoch 8/15]  LR=8.09e-05
+  Epoch 8/15  [====================]   667/667  loss 0.2811  7.12s/b  ETA 0s        
+  ↳ loss 0.2811  |  took 1h 19m 8s  |  elapsed 2h 56m 37s  |  ETA 9h 14m 6s
+  ↳ val  acc 0.9532  auc 0.9706
+  No improvement — patience 2/5
+  🔶 Checkpoint saved
+
+[Epoch 9/15]  LR=7.83e-05
+  Epoch 9/15  [====================]   667/667  loss 0.2524  7.11s/b  ETA 0s        
+  ↳ loss 0.2524  |  took 1h 19m 3s  |  elapsed 4h 33m 34s  |  ETA 7h 54m 45s
+  ↳ val  acc 0.9635  auc 0.9784
+  ✨ Best model saved  (AUC=0.9784)
+  🔶 Checkpoint saved
+
+[Epoch 10/15]  LR=7.40e-05
+  Epoch 10/15  [====================]   667/667  loss 0.2128  7.12s/b  ETA 0s        
+  ↳ loss 0.2128  |  took 1h 19m 11s  |  elapsed 1h 19m 11s  |  ETA 6h 35m 59s
+  ↳ val  acc 0.9671  auc 0.9777
+  No improvement — patience 1/5
+  🔶 Checkpoint saved
+
+[Epoch 11/15]  LR=6.83e-05
+  Epoch 11/15  [====================]   667/667  loss 0.2048  7.13s/b  ETA 0s        
+  ↳ loss 0.2048  |  took 1h 19m 13s  |  elapsed 2h 57m 26s  |  ETA 5h 16m 50s
+  ↳ val  acc 0.9547  auc 0.9808
+  ✨ Best model saved  (AUC=0.9808)
+  🔶 Checkpoint saved
+
+[Epoch 12/15]  LR=6.14e-05
+  Epoch 12/15  [====================]   667/667  loss 0.1747  7.18s/b  ETA 0s        
+  ↳ loss 0.1747  |  took 1h 19m 46s  |  elapsed 4h 35m 2s  |  ETA 3h 58m 11s
+  ↳ val  acc 0.9518  auc 0.9796
+  No improvement — patience 1/5
+  🔶 Checkpoint saved
+
+[Epoch 13/15]  LR=5.35e-05
+  Epoch 13/15  [====================]   667/667  loss 0.1736  7.13s/b  ETA 0s        
+  ↳ loss 0.1736  |  took 1h 19m 14s  |  elapsed 1h 19m 14s  |  ETA 2h 38m 28s
+  ↳ val  acc 0.9766  auc 0.9872
+  ✨ Best model saved  (AUC=0.9872)
+  🔶 Checkpoint saved
+
+[Epoch 14/15]  LR=4.52e-05
+  Epoch 14/15  [====================]   667/667  loss 0.1674  7.19s/b  ETA 0s        
+  ↳ loss 0.1674  |  took 1h 19m 53s  |  elapsed 2h 57m 29s  |  ETA 1h 19m 33s
+  ↳ val  acc 0.9744  auc 0.9873
+  ✨ Best model saved  (AUC=0.9873)
+  🔶 Checkpoint saved
+
+[Epoch 15/15]  LR=3.66e-05
+  Epoch 15/15  [====================]   667/667  loss 0.1569  7.14s/b  ETA 0s        
+  ↳ loss 0.1569  |  took 1h 19m 19s  |  elapsed 4h 34m 46s  |  ETA 0s
+  ↳ val  acc 0.9656  auc 0.9810
+  No improvement — patience 1/5
+  🔶 Checkpoint saved
+
+Done.  Best val AUC: 0.9873
+   Total time: 4h 52m 34s
+   Best model: F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Models\video_combined\combined_train_best.pth

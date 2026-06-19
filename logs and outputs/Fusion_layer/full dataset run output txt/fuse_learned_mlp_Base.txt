@@ -1,0 +1,137 @@
+[INFO] Loading aligned scores ...
+  Samples: 21541  Real: 10209  Fake: 11332
+
+========== Baselines ==========
+
+=======================================================
+ Audio Only
+=======================================================
+  AUC                    : 0.7639
+  EER                    : 0.2985
+  Optimal Threshold      : 0.0261
+  Accuracy @ Optimal Thr : 0.7101
+
+  Confusion Matrix:
+[[7718 2491]
+ [3753 7579]]
+
+  Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.6728    0.7560    0.7120     10209
+           1     0.7526    0.6688    0.7083     11332
+
+    accuracy                         0.7101     21541
+   macro avg     0.7127    0.7124    0.7101     21541
+weighted avg     0.7148    0.7101    0.7100     21541
+
+
+=======================================================
+ Video Only
+=======================================================
+  AUC                    : 0.5354
+  EER                    : 0.4635
+  Optimal Threshold      : 0.3982
+  Accuracy @ Optimal Thr : 0.5390
+
+  Confusion Matrix:
+[[5137 5072]
+ [4858 6474]]
+
+  Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.5140    0.5032    0.5085     10209
+           1     0.5607    0.5713    0.5660     11332
+
+    accuracy                         0.5390     21541
+   macro avg     0.5373    0.5372    0.5372     21541
+weighted avg     0.5386    0.5390    0.5387     21541
+
+
+========== Logistic Regression (5-fold CV) ==========
+    Fold 1/5  AUC: 0.7353
+    Fold 2/5  AUC: 0.7251
+    Fold 3/5  AUC: 0.7498
+    Fold 4/5  AUC: 0.7285
+    Fold 5/5  AUC: 0.7478
+    CV Mean AUC: 0.7373 ± 0.0100
+
+=======================================================
+ Logistic Regression (OOF)
+=======================================================
+  AUC                    : 0.7364
+  EER                    : 0.3330
+  Optimal Threshold      : 0.4411
+  Accuracy @ Optimal Thr : 0.6897
+
+  Confusion Matrix:
+[[9031 1178]
+ [5506 5826]]
+
+  Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.6212    0.8846    0.7299     10209
+           1     0.8318    0.5141    0.6355     11332
+
+    accuracy                         0.6897     21541
+   macro avg     0.7265    0.6994    0.6827     21541
+weighted avg     0.7320    0.6897    0.6802     21541
+
+
+========== MLP 2→16→8→1 (5-fold CV) ==========
+    Fold 1/5  AUC: 0.7628
+    Fold 2/5  AUC: 0.7348
+    Fold 3/5  AUC: 0.7766
+    Fold 4/5  AUC: 0.7464
+    Fold 5/5  AUC: 0.7705
+    CV Mean AUC: 0.7582 ± 0.0155
+
+=======================================================
+ MLP (OOF)
+=======================================================
+  AUC                    : 0.7572
+  EER                    : 0.3089
+  Optimal Threshold      : 0.4808
+  Accuracy @ Optimal Thr : 0.7021
+
+  Confusion Matrix:
+[[8559 1650]
+ [4766 6566]]
+
+  Classification Report:
+              precision    recall  f1-score   support
+
+           0     0.6423    0.8384    0.7274     10209
+           1     0.7992    0.5794    0.6718     11332
+
+    accuracy                         0.7021     21541
+   macro avg     0.7207    0.7089    0.6996     21541
+weighted avg     0.7248    0.7021    0.6981     21541
+
+
+========== Per-Attack (MLP Fusion, vs 10209 real) ==========
+  [faceswap-wav2lip      ]  AUC: 0.8036  EER: 0.2730
+  [fsgan-wav2lip         ]  AUC: 0.7614  EER: 0.3103
+  [rtvc                  ]  AUC: 0.7476  EER: 0.3226
+  [wav2lip               ]  AUC: 0.7277  EER: 0.3326
+
+[INFO] Training final models on full data ...
+  LR coefficients  : audio=1.0849  video=0.0902  bias=0.2273
+  Saved lr_model.pkl and mlp_model.pkl
+
+[INFO] Saved ROC comparison → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Fusion Layer\results\learned\roc_comparison.png
+
+[INFO] Saved all results → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Fusion Layer\results\learned
+
+=======================================================
+ FINAL SUMMARY
+=======================================================
+  Method                              AUC       EER
+  ------------------------------------------------
+  Audio Only                       0.7639    0.2985
+  Video Only                       0.5354    0.4635
+  LR Fusion (CV)                   0.7364    0.3330
+  MLP Fusion (CV)                  0.7572    0.3089
+=======================================================

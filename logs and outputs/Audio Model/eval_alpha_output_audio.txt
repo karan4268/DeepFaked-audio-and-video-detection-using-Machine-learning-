@@ -1,0 +1,11 @@
+[INFO] Device: cuda
+[INFO] Loading splits + video index...
+  Val file_ids from video index: 6328
+[INFO] Loading audio index...
+  Audio samples after val-split filter: 6336
+  Real: 2982  Fake: 3354
+[INFO] Audio model loaded
+
+[INFO] Done — 6336 samples
+[INFO] Val AUC (audio): 0.7475
+[INFO] Saved → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Models\audio\eval_val_for_alpha

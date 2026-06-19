@@ -1,0 +1,10 @@
+[INFO] Device: cuda
+[INFO] Using ITW root: F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Data\Audio\cache_wave\itw_test
+[INFO] Loaded checkpoint
+[INFO] Labelled layout — real: 1218  fake: 1454
+[INFO] Detected mode: CACHE
+
+========== ITW Results ==========
+  [ITW] AUC: 0.9999  EER: 0.0030  N=2672
+
+[INFO] Saved outputs → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Models\audio\eval_outputs_itw

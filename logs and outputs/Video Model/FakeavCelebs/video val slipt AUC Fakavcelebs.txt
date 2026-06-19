@@ -1,0 +1,14 @@
+[INFO] Device: cuda | NVIDIA GeForce GTX 1650 Ti
+[INFO] Loading splits...
+[INFO] Loading video index...
+  Val samples : 6335
+  Real        : 2982
+  Fake        : 3353
+
+[INFO] Loading model: F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Models\video_finetuned\finetuned_best.pth
+  Checkpoint val_auc : 0.8474491946209517
+Video Val Inference: 100%|██████████████████████████████████████████| 634/634 [1:17:43<00:00,  7.36s/it]
+
+[INFO] Done — 6335 samples
+[INFO] Val AUC (video): 0.8474
+[INFO] Saved → F:\Experiments\Mtech Project DeepFaked Video and Audio analyzer\Models\video_finetuned\eval_val_for_alpha
